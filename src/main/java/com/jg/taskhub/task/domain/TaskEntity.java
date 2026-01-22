@@ -1,6 +1,8 @@
 package com.jg.taskhub.task.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
 
@@ -12,12 +14,16 @@ public class TaskEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
+    @Size(max = 255)
     @Column(nullable = false)
     private String title;
 
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    @NotBlank
+    @Size(max = 30)
     @Column(nullable = false, length = 30)
     private String status;
 

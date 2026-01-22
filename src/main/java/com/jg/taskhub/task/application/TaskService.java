@@ -1,5 +1,6 @@
 package com.jg.taskhub.task.application;
 
+import com.jg.taskhub.common.exception.TaskNotFoundException;
 import com.jg.taskhub.task.domain.TaskEntity;
 import com.jg.taskhub.task.dto.CreateTaskRequest;
 import com.jg.taskhub.task.dto.TaskResponse;
@@ -32,7 +33,7 @@ public class TaskService {
 
     public TaskResponse getById(Long id) {
         TaskEntity task = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found"));
+                .orElseThrow(() -> new TaskNotFoundException(id));
         return mapper.toResponse(task);
     }
 
@@ -43,13 +44,16 @@ public class TaskService {
 
     public TaskResponse update(Long id, UpdateTaskRequest request) {
         TaskEntity task = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found"));
+                .orElseThrow(() -> new TaskNotFoundException(id));
 
         mapper.updateEntity(task, request);
         return mapper.toResponse(task);
     }
 
     public void delete(Long id) {
+        if (!repository.existsById(id)) {
+            throw new TaskNotFoundException(id);
+        }
         repository.deleteById(id);
     }
 }

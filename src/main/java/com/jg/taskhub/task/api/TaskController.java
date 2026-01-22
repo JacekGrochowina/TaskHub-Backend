@@ -4,6 +4,7 @@ import com.jg.taskhub.task.application.TaskService;
 import com.jg.taskhub.task.dto.CreateTaskRequest;
 import com.jg.taskhub.task.dto.TaskResponse;
 import com.jg.taskhub.task.dto.UpdateTaskRequest;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,14 +32,14 @@ public class TaskController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public TaskResponse create(@RequestBody CreateTaskRequest request) {
+    public TaskResponse create(@Valid @RequestBody CreateTaskRequest request) {
         return service.create(request);
     }
 
     @PutMapping("/{id}")
     public TaskResponse update(
             @PathVariable Long id,
-            @RequestBody UpdateTaskRequest request
+            @Valid @RequestBody UpdateTaskRequest request
     ) {
         return service.update(id, request);
     }
