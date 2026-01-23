@@ -5,10 +5,11 @@ import com.jg.taskhub.task.dto.CreateTaskRequest;
 import com.jg.taskhub.task.dto.TaskResponse;
 import com.jg.taskhub.task.dto.UpdateTaskRequest;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/tasks")
@@ -21,8 +22,8 @@ public class TaskController {
     }
 
     @GetMapping
-    public List<TaskResponse> getAll() {
-        return service.getAll();
+    public Page<TaskResponse> getAll(@PageableDefault(size = 20) Pageable pageable) {
+        return service.getAll(pageable);
     }
 
     @GetMapping("/{id}")

@@ -8,9 +8,9 @@ import com.jg.taskhub.task.dto.UpdateTaskRequest;
 import com.jg.taskhub.task.infrastructure.TaskRepository;
 import com.jg.taskhub.task.mapper.TaskMapper;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @Transactional
@@ -24,11 +24,9 @@ public class TaskService {
         this.mapper = mapper;
     }
 
-    public List<TaskResponse> getAll() {
-        return repository.findAll()
-                .stream()
-                .map(mapper::toResponse)
-                .toList();
+    public Page<TaskResponse> getAll(Pageable pageable) {
+        return repository.findAll(pageable)
+                .map(mapper::toResponse);
     }
 
     public TaskResponse getById(Long id) {
