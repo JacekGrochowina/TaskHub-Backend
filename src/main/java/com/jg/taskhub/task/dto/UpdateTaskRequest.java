@@ -1,5 +1,6 @@
 package com.jg.taskhub.task.dto;
 
+import com.jg.taskhub.task.domain.TaskStatus;
 import jakarta.validation.constraints.Size;
 
 public record UpdateTaskRequest(
@@ -8,7 +9,6 @@ public record UpdateTaskRequest(
 
         String description,
 
-        @Size(max = 30)
-        String status
+        TaskStatus status
 ) {
 }

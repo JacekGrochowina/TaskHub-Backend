@@ -1,6 +1,8 @@
 package com.jg.taskhub.task.dto;
 
+import com.jg.taskhub.task.domain.TaskStatus;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public record CreateTaskRequest(
@@ -10,8 +12,7 @@ public record CreateTaskRequest(
 
         String description,
 
-        @NotBlank
-        @Size(max = 30)
-        String status
+        @NotNull
+        TaskStatus status
 ) {
 }
