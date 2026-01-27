@@ -1,5 +1,6 @@
 package com.jg.taskhub.task.domain;
 
+import com.jg.taskhub.user.domain.UserEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -27,6 +28,17 @@ public class TaskEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
     private TaskStatus status;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 30)
+    private TaskPriority priority;
+
+    private LocalDateTime deadline;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -74,6 +86,30 @@ public class TaskEntity {
 
     public void setStatus(TaskStatus status) {
         this.status = status;
+    }
+
+    public TaskPriority getPriority() {
+        return priority;
+    }
+
+    public void setPriority(TaskPriority priority) {
+        this.priority = priority;
+    }
+
+    public LocalDateTime getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(LocalDateTime deadline) {
+        this.deadline = deadline;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 
     public LocalDateTime getCreatedAt() {
